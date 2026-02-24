@@ -23,3 +23,16 @@ stations["kten"] = set(["nd", "ia"])
 stations["keleven"] = set(["mn", "mo", "ar"])
 stations["ktwelve"] = set(["la"])
 stations["kthirteen"] = set(["mo", "ar"])
+
+
+# Definition of the objetive function
+def objective_function(solution, stations, needed_states):
+    covered = set()
+
+    for station in solution:
+        covered |= stations[station]
+
+    uncovered = needed_states - covered
+
+    # Penalty uncovered states with a value of 50
+    return len(uncovered) * 50 + len(solution)

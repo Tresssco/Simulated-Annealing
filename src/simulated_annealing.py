@@ -27,12 +27,13 @@ stations["kthirteen"] = set(["mo", "ar"])
 
 # Definition of the objetive function
 def objective_function(solution, stations, needed_states):
-    covered = set()
+
+    covered = set()                         #Conjunto para guardar los estados que cubren las estaciones
 
     for station in solution:
-        covered |= stations[station]
+        covered |= stations[station]        #Union para acumular en el set
 
-    uncovered = needed_states - covered
+    uncovered = needed_states - covered     #Calculo que estados faltan por cubrir
 
-    # Penalty uncovered states with a value of 50
+    # Penalize uncovered states with a value of 50
     return len(uncovered) * 50 + len(solution)

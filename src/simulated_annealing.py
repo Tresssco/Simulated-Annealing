@@ -50,3 +50,41 @@ def get_neighbor(solution, all_stations):
         new_solution.add(random.choice(list(all_stations)))
 
     return new_solution
+
+
+# Simulated Annealing function
+def simulated_annealing(stations, needed_states, n_iterations, temp):
+
+    all_stations = list(stations.keys())        #Convertimos el diccionario de estaciones a una lista
+
+    
+    current = set(random.sample(all_stations, 3))   #Se eligen 3 estaciones al azar para empezar
+    current_eval = objective_function(current, stations, needed_states)
+
+    best = current.copy()
+    best_eval = current_eval    #Guardamos la mejor solución (al principio la mejor es la inicial)
+
+    history = []   
+
+    for i in range(n_iterations):
+        t = temp / float(i + 1)     #Temperatura actual, disminuye en cada iteración
+
+        candidate = get_neighbor(current, all_stations)     #Generamos una solución vecina
+        candidate_eval = objective_function(candidate, stations, needed_states) #La evaluamos
+
+        delta = candidate_eval - current_eval   #Se mide cuanto empeora o mejora la nueva solución
+
+        #Decisión de aceptar la nueva solución.
+        #Delta > 0: La solución mejora
+        #Delta < 0: La solución empeora. Se acepta con cierta probabilidad (OR). A mayor delta menor probabilidad. A mayor t mayor probabilidad.
+        if delta < 0 or random.random() < math.exp(-delta / t):
+            current = candidate
+            current_eval = candidate_eval
+
+            if candidate_eval < best_eval:
+                best = candidate.copy()
+                best_eval = candidate_eval
+
+        history.append(best_eval)   
+
+    return best, best_eval, history

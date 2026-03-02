@@ -37,3 +37,16 @@ def objective_function(solution, stations, needed_states):
 
     # Penalize uncovered states with a value of 50
     return len(uncovered) * 50 + len(solution)
+
+
+# Neighbor function: small random change
+def get_neighbor(solution, all_stations):
+    new_solution = solution.copy()
+
+    #Se genera un número entre 0 y 1 y nos aseguramos de solamente de, en caso de ser menor a 0.5, eliminar solo 1 estación
+    if random.random() < 0.5 and len(new_solution) > 1:        
+        new_solution.remove(random.choice(list(new_solution)))
+    else:
+        new_solution.add(random.choice(list(all_stations)))
+
+    return new_solution

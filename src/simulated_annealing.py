@@ -1,5 +1,6 @@
 import random,math
 
+
 # USA states where we want to be listened
 needed_states = set(["mt", "wa", "or", "id", "nv", "ut", "ca", "az"])
 added_states = set(
@@ -65,9 +66,9 @@ def simulated_annealing(stations, needed_states, n_iterations, temp):
     best_eval = current_eval    #Guardamos la mejor solución (al principio la mejor es la inicial)
 
     history = []   
-
     for i in range(n_iterations):
-        t = temp / float(i + 1)     #Temperatura actual, disminuye en cada iteración
+        t = temp / float(i + 1)     #Temperatura actual, disminuye en cada iteración, esquema de enfriamiento hiperbólico.
+       #t = temp * (0.95**i)        #Esquema de enfriamiento geométrico
 
         candidate = get_neighbor(current, all_stations)     #Generamos una solución vecina
         candidate_eval = objective_function(candidate, stations, needed_states) #La evaluamos
@@ -75,8 +76,11 @@ def simulated_annealing(stations, needed_states, n_iterations, temp):
         delta = candidate_eval - current_eval   #Se mide cuanto empeora o mejora la nueva solución
 
         #Decisión de aceptar la nueva solución.
-        #Delta > 0: La solución mejora
-        #Delta < 0: La solución empeora. Se acepta con cierta probabilidad (OR). A mayor delta menor probabilidad. A mayor t mayor probabilidad.
+        #Delta < 0: La solución mejora
+        #Delta > 0: La solución empeora. Se acepta con cierta probabilidad (OR). 
+            # A mayor delta menor probabilidad. 
+            # A mayor t mayor probabilidad.
+
         if delta < 0 or random.random() < math.exp(-delta / t):
             current = candidate
             current_eval = candidate_eval
@@ -88,3 +92,7 @@ def simulated_annealing(stations, needed_states, n_iterations, temp):
         history.append(best_eval)   
 
     return best, best_eval, history
+
+
+
+

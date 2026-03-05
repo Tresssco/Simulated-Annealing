@@ -12,7 +12,7 @@ def main():
 
     for _ in range(5):
         _, _, history = simulated_annealing(stations, needed_states, 2000, 10)
-        plt.plot(history[:200])
+        plt.plot(history[:150])
 
     plt.xlabel("Iteración")
     plt.ylabel("Coste")

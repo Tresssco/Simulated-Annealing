@@ -128,3 +128,10 @@ El proyecto implementa una estrategia de búsqueda:
 - Aunque la ruta de búsqueda varía, el algoritmo es sumamente rápido: usualmente se alcanza el estado estable en menos de 100 iteraciones, mucho antes de agotar las 2000 programadas.
 
 
+## Referencias
+
+- El enunciado de este problema fue proporcionado por @dfleta en el repositorio https://github.com/dfleta/greedy-search.git 
+- Para la estructura del código me basé en: https://www.geeksforgeeks.org/dsa/implement-simulated-annealing-in-python/ 
+
+
+
